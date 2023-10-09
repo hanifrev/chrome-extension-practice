@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.modal-title {
+  @apply font-bold text-3xl;
+}

@@ -10,6 +10,9 @@ const ProtectedRoute = ({ children }: Props) => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    chrome.storage.sync.get(["username"], (res) => {
+      console.log(res.name);
+    });
     chrome.storage.local.get("isAuthenticated", (result) => {
       const isAuthenticated = result.isAuthenticated;
 

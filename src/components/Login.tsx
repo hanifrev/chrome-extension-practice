@@ -23,9 +23,13 @@ const Login: React.FC<LoginPage> = ({ onLogin }) => {
 
   const navigate = useNavigate();
 
-  const handleLogin = () => {
+  const handleLogin = (e: any) => {
     localStorage.setItem("theUsername", username);
     const theusername = localStorage.getItem("theUsername");
+
+    chrome.storage.sync.set({ username }, () => {
+      console.log(`${username} is the username`);
+    });
 
     if (theusername) {
       navigate("/main");

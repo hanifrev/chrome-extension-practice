@@ -21,6 +21,38 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 chrome.runtime.onMessage.addListener((message) => {
   if (message.action == "showThirdParty") {
     console.log("catch button working");
+    console.log(Math.random());
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      if (chrome.runtime.lastError) {
+        console.error(chrome.runtime.lastError);
+        return;
+      }
+
+      const activeTab = tabs[0];
+      if (!activeTab) {
+        console.error("No active tab found.");
+        return;
+      }
+
+      chrome.scripting.executeScript(
+        {
+          // @ts-ignore
+          target: { tabId: activeTab.id },
+          function: () => {
+            // This code will be executed in the content script
+            chrome.runtime.sendMessage({
+              action: "updateState",
+              newState: true,
+            });
+          },
+        },
+        () => {
+          if (chrome.runtime.lastError) {
+            console.error(chrome.runtime.lastError);
+          }
+        }
+      );
+    });
   }
 });
 

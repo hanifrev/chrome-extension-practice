@@ -4,12 +4,12 @@ import ContentScript from "./ContentScript";
 
 const rootElement = document.createElement("div");
 rootElement.style.position = "fixed";
-rootElement.style.width = "100vw";
-rootElement.style.height = "100vh";
-rootElement.style.zIndex = "999999";
+rootElement.style.width = "auto";
+rootElement.style.height = "auto";
+rootElement.style.zIndex = "999";
 rootElement.style.top = "0";
 rootElement.style.left = "0";
-rootElement.style.pointerEvents = "none";
+rootElement.style.pointerEvents = "auto";
 
 document.body.appendChild(rootElement);
 

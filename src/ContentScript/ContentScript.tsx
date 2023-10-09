@@ -4,6 +4,9 @@ import ThirdParty from "../components/ThirdParty";
 
 const ContentScript = () => {
   const [showThirdParty, setShowThirdParty] = useState(false);
+
+  let myState = false;
+
   useEffect(() => {
     const container = document.createElement("div");
     container.style.position = "fixed";
@@ -12,6 +15,14 @@ const ContentScript = () => {
     container.style.transform = "translate(-50%, -50%)";
     document.body.appendChild(container);
     setShowThirdParty(true);
+
+    chrome.runtime.onMessage.addListener((message) => {
+      if (message.action === "updateState") {
+        // Update the state based on the message
+        myState = message.newState;
+        console.log("State updated:", myState);
+      }
+    });
 
     // Render the ThirdParty component inside the container
     // ReactDOM.render(<ThirdParty />, container);
