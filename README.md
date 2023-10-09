@@ -39,7 +39,27 @@ npm run build
 npm run watch
 ```
 
-## References
-[https://github.com/chibat/chrome-extension-typescript-starter](https://github.com/chibat/chrome-extension-typescript-starter)
+## Journal
 
-[https://github.com/t3-oss/create-t3-app](https://github.com/t3-oss/create-t3-app)
+#### 3 October 2023
+
+Slicing and reading documentation and watch tutorial on how chrome extension works
+
+#### 4 October 2023
+
+Reading documentation and watch tutorial on how chrome extension works.
+Try to use local storage and cookies to save state on browser, but and then realized that that's not the way to save state, because when we close the extension's popup, the local storage and cookies will also gone
+
+#### 5 October 2023
+
+Understanding how background script work, create some function to test how background script works, and chrome storage.
+My browser seems weird, some classes not rendered, but it's work when i use incognito mode
+
+#### 6 October 2023
+
+Understanding how content script work, still confuse how background and content script connected.
+The pokeball is appear and clickable, but still loaded on intiial load, not on when we click catch pokemon on popup
+
+#### 9 October 2023
+
+Some tailwind not working (like on Modal components), so i used plain CSS for styling,
