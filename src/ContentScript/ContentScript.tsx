@@ -4,12 +4,12 @@ import ThirdParty from "../components/ThirdParty";
 import Cookies from "js-cookie";
 
 const ContentScript = () => {
-  // const [showThirdParty, setShowThirdParty] = useState(false);
-  const [isCatching, setIsCatching] = useState(false);
+  const [showThirdParty, setShowThirdParty] = useState(false);
+  const [isCatching, setIsCatching] = useState<boolean>(false);
 
   useEffect(() => {
     const container = document.createElement("div");
-    container.style.position = "relative";
+    container.style.position = "fixed";
     container.style.top = "50%";
     container.style.left = "50%";
     container.style.transform = "translate(-50%, -50%)";
@@ -29,38 +29,20 @@ const ContentScript = () => {
       if (request.greeting === "hello") {
         await console.log("Content script received a message:", request);
         await sendResponse({ response: "Message received in content scripts" });
-        // await setShowThirdParty(true);
+        await setShowThirdParty(true);
       }
     });
 
+    // put the catched pokemon name to console
     const cook = Cookies.get("pokename");
     console.log(cook);
-
-    // chrome.storage.local.get().then((res) => {
-    //   setIsCatching(res.isCatching);
-    // });
   }, []);
 
+  // to change the state for show / unshown the pokeball (still not working yet)
   useEffect(() => {
-    // Listen for changes in Chrome storage
-    const handleStorageChange = (changes: any, areaName: any) => {
-      if (areaName === "local" && "isCatching" in changes) {
-        setIsCatching(changes.isCatching.newValue);
-      }
-    };
-
-    // Add a listener to monitor changes in Chrome storage
-    chrome.storage.onChanged.addListener(handleStorageChange);
-
-    // Initial fetch of isCatching value
-    chrome.storage.local.get("isCatching", (result) => {
-      setIsCatching(result.isCatching || false); // Set to false if undefined
+    chrome.storage.local.get().then((res) => {
+      setIsCatching(res.isCatching);
     });
-
-    // Clean up the listener when the component unmounts
-    return () => {
-      chrome.storage.onChanged.removeListener(handleStorageChange);
-    };
   }, []);
 
   return <div>{isCatching && <ThirdParty />}</div>;

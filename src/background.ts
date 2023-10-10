@@ -1,5 +1,6 @@
 import Cookies from "js-cookie";
 
+// to get credential data
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.username && request.password) {
     const username = request.username;
@@ -21,40 +22,11 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
 });
 
+// test button
 chrome.runtime.onMessage.addListener((message) => {
   if (message.action == "showThirdParty") {
     console.log("catch button working");
     console.log(Math.random());
-    //   if (chrome.runtime.lastError) {
-    //     console.error(chrome.runtime.lastError);
-    //     return;
-    //   }
-
-    //   const activeTab = tabs[0];
-    //   if (!activeTab) {
-    //     console.error("No active tab found.");
-    //     return;
-    //   }
-
-    //   chrome.scripting.executeScript(
-    //     {
-    //       // @ts-ignore
-    //       target: { tabId: activeTab.id },
-    //       function: () => {
-    //         // This code will be executed in the content script
-    //         chrome.runtime.sendMessage({
-    //           action: "updateState",
-    //           newState: true,
-    //         });
-    //       },
-    //     },
-    //     () => {
-    //       if (chrome.runtime.lastError) {
-    //         console.error(chrome.runtime.lastError);
-    //       }
-    //     }
-    //   );
-    // });
   }
 });
 
@@ -66,6 +38,7 @@ const getRandomNumber = () => {
   return randomNumber;
 };
 
+// to fetch pokemon
 chrome.runtime.onMessage.addListener(async (res, req, sendResponse) => {
   if (res.message === "FETCH") {
     const id = await getRandomNumber();
@@ -86,6 +59,7 @@ chrome.runtime.onMessage.addListener(async (res, req, sendResponse) => {
   }
 });
 
+// log when pop up mounted
 chrome.runtime.onMessage.addListener((request: { popupMounted: boolean }) => {
   // Log statement if request.popupMounted is true
   if (request.popupMounted) {
@@ -93,13 +67,14 @@ chrome.runtime.onMessage.addListener((request: { popupMounted: boolean }) => {
   }
 });
 
+// test content script
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === "performAction") {
     console.log("manok");
     sendResponse({ result: "Action completed in the background script" });
   }
 });
-
+//test content script
 chrome.tabs.query({ active: true, currentWindow: true }, function (tabs: any) {
   chrome.tabs.sendMessage(
     tabs && tabs[0].id,
@@ -108,11 +83,4 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs: any) {
       console.log(response);
     }
   );
-});
-
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message.action === "startCatching") {
-    // Set a flag in Chrome storage to indicate that catching should begin
-    chrome.storage.local.set({ isCatching: true });
-  }
 });

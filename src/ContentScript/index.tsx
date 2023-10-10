@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import ContentScript from "./ContentScript";
 
 const rootElement = document.createElement("div");
-rootElement.style.position = "relative";
+rootElement.style.position = "initial";
 rootElement.style.width = "auto";
 rootElement.style.height = "auto";
 rootElement.style.zIndex = "999";

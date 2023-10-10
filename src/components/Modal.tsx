@@ -6,6 +6,7 @@ import Cookies from "js-cookie";
 const Modal = () => {
   const [fetched, setFetched] = useState(false);
   const [data, setData] = useState<any>({});
+
   useEffect(() => {
     chrome.runtime.sendMessage({
       message: "FETCH",
@@ -48,6 +49,7 @@ const Modal = () => {
         height: "560px",
         width: "940px",
         borderRadius: 20,
+        zIndex: 99999,
       }}
     >
       <div style={{ fontSize: "32px", fontWeight: 800, color: "#000000" }}>

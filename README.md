@@ -73,4 +73,4 @@ Some tailwind not working (like on Modal components), so i used plain CSS for st
 
 #### 10 October 2023
 
-Fetch from background script and send it to Modal
+Fetch from background script and send it to Modal, the pokeball still loaded on initial load, i already make it only shown when i click the catch pokemon button on popup, but still didn't make it. And i also playing arround with chrome API such as storage, runtime, etc. You can see on console there's a lot of log that i create during practice

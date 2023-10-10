@@ -3,25 +3,19 @@ import OverviewCard from "./OverviewCard";
 
 const MainPage = () => {
   const [isCatching, setIsCatching] = useState(false);
-  // const [testState, setTestState] = useState(false);
+  const [testState, setTestState] = useState(false);
 
-  const fetchPokemon = async () => {
+  const fetchPokemon = () => {
     setIsCatching(true);
+    // to change the state for show / unshown the pokeball (still not working yet)
     chrome.storage.local.set({ isCatching: true });
-
-    chrome.runtime.sendMessage({ action: "startCatching" });
-
     chrome.runtime.sendMessage({ action: "performAction" }, (response) => {
       if (response && response.result) {
         console.log("Popup received a response:", response.result);
-        // setTestState(true);
+        setTestState(true);
       }
     });
   };
-
-  // {
-  //   testState && ;
-  // }
 
   return (
     <div className="w-[400px] p-6">
