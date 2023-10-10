@@ -10,6 +10,7 @@ const ProtectedRoute = ({ children }: Props) => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    Cookies.get("extUsername");
     chrome.storage.sync.get(["username"], (res) => {
       console.log(res.name);
     });

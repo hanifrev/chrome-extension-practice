@@ -4,18 +4,23 @@ import Modal from "./Modal";
 
 const ThirdParty = () => {
   const [modal, setModal] = useState(false);
+  const [thirdParty, setThirdParty] = useState(false);
+
   const handleClick = () => {
     console.log("click ball");
     setModal(!modal);
   };
 
+  const fetchPokemon = () => {};
+
   return (
     <>
       <div
         onClick={handleClick}
-        className="w-[300px] h-[300px] bottom-0 z-[99999] mx-auto fixed left-[50%] top-[50%] transform translate-x-[-50%] translate-y-[-50%] "
+        style={{ bottom: 0, position: "absolute" }}
+        className="w-[300px] h-[300px] z-[99999] mx-auto left-[50%] top-[50%] transform translate-x-[-50%] translate-y-[-50%] "
       >
-        <Pokeball />
+        {<Pokeball />}
       </div>
       {modal && <Modal />}
     </>

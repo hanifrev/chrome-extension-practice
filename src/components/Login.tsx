@@ -18,16 +18,13 @@ const Login: React.FC<LoginPage> = ({ onLogin }) => {
     left: "50%",
     transform: "translate(-50%, -50%)",
   };
-
-  Cookies.set("username", username);
-
   const navigate = useNavigate();
 
   const handleLogin = (e: any) => {
     localStorage.setItem("theUsername", username);
     const theusername = localStorage.getItem("theUsername");
 
-    chrome.storage.sync.set({ username }, () => {
+    chrome.storage.local.set({ username }, () => {
       console.log(`${username} is the username`);
     });
 
