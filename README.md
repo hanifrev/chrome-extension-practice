@@ -1,18 +1,10 @@
-# create-t3-extension
+# Pokemon Extension Practice
 
 Chrome Extension: React + TypeScript + TailWind CSS
 
-## Prerequisites
-
-- [node + npm](https://nodejs.org/) (Current Version)
-
 ## Includes the following
 
-- TypeScript
-- Webpack
-- React
-- Tailwind CSS
-- Jest
+TypeScript, Webpack, React, Tailwind CSS, Jest
 
 ## Project Structure
 
