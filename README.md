@@ -74,3 +74,7 @@ Some tailwind not working (like on Modal components), so i used plain CSS for st
 #### 10 October 2023
 
 Fetch from background script and send it to Modal, the pokeball still loaded on initial load, i already make it only shown when i click the catch pokemon button on popup, but still didn't make it. And i also playing arround with chrome API such as storage, runtime, etc. You can see on console there's a lot of log that i create during practice
+
+#### 11 October 2023
+
+Found a solution how to show pokeball by clicking 'Catch a Pokemons' button inside menu / popup. I use this https://stackoverflow.com/a/69128710 as referance. On MainPage, i sendMessage to background script when the 'Catch a Pokemons' clicked, with action called 'perfomAction'. On background script, while listening to message 'perfomAction', i add chrome.tabs.query with action: "open_dialog_box" to communicate with content script. On content script, if content script received "open_dialog_box", it will set setShowThirdParty to true and pokeball shown.
