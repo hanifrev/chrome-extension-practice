@@ -67,11 +67,18 @@ chrome.runtime.onMessage.addListener((request: { popupMounted: boolean }) => {
   }
 });
 
-// test content script
+// to show the pokeball through 'catch pokemon' button inside menu/popup
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === "performAction") {
-    console.log("manok");
+    // console.log("manok");
     sendResponse({ result: "Action completed in the background script" });
+
+    chrome.tabs.query(
+      { active: true, currentWindow: true },
+      function (tabs: any) {
+        chrome.tabs.sendMessage(tabs[0].id, { action: "open_dialog_box" });
+      }
+    );
   }
 });
 //test content script

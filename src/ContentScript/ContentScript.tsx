@@ -29,23 +29,39 @@ const ContentScript = () => {
       if (request.greeting === "hello") {
         await console.log("Content script received a message:", request);
         await sendResponse({ response: "Message received in content scripts" });
-        await setShowThirdParty(true);
       }
     });
 
     // put the catched pokemon name to console
     const cook = Cookies.get("pokename");
     console.log(cook);
-  }, []);
 
-  // to change the state for show / unshown the pokeball (still not working yet)
-  useEffect(() => {
-    chrome.storage.local.get().then((res) => {
-      setIsCatching(res.isCatching);
+    // to change the state for show / unshown the pokeball (still not working yet)
+    chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+      console.log(message);
+      console.log(message.action);
+      if (message.action == "open_dialog_box") {
+        setShowThirdParty(true);
+      }
+      return true;
     });
   }, []);
 
-  return <div>{isCatching && <ThirdParty />}</div>;
+  console.log(showThirdParty);
+
+  // to change the state for show / unshown the pokeball (still not working yet)
+  // useEffect(() => {
+  //   chrome.storage.local.get().then((res) => {
+  //     setIsCatching(res.isCatching);
+  //   });
+  // }, []);
+
+  return (
+    <div>
+      {showThirdParty && <ThirdParty />}
+      {/* {!isCatching && <ThirdParty />} */}
+    </div>
+  );
 };
 
 export default ContentScript;

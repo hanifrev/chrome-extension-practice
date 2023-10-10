@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import OverviewCard from "./OverviewCard";
 
 const MainPage = () => {
@@ -16,6 +16,17 @@ const MainPage = () => {
       }
     });
   };
+
+  useEffect(() => {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs: any) => {
+      const activeTab = tabs[0];
+      if (activeTab) {
+        chrome.tabs.sendMessage(activeTab.id, {
+          action: "executeFunction",
+        });
+      }
+    });
+  }, [fetchPokemon]);
 
   return (
     <div className="w-[400px] p-6">
