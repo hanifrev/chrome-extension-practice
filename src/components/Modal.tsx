@@ -46,7 +46,7 @@ const Modal = () => {
         top: "50%",
         left: "50%",
         transform: "translate(-50%, -50%)",
-        height: "560px",
+        height: "690px",
         width: "940px",
         borderRadius: 20,
         zIndex: 99999,
