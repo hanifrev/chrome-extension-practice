@@ -18,11 +18,7 @@ const Popup = () => {
 
   console.log(isAuthenticated);
 
-  return (
-    <>
-      {isAuthenticated && isAuthenticated ? <MainPage /> : <Login onLogin={} />}
-    </>
-  );
+  return <>{isAuthenticated && isAuthenticated ? <MainPage /> : <Login />}</>;
 };
 
 export default Popup;
