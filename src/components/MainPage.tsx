@@ -9,7 +9,7 @@ const MainPage = () => {
     setIsCatching(true);
     chrome.storage.local.set({ isCatching: true });
 
-    // to change the state for show / unshown the pokeball (still not working yet)
+    // to change the state for show / unshown the pokeball
     chrome.runtime.sendMessage({ action: "performAction" }, (response) => {
       if (response && response.result) {
         console.log("Popup received a response:", response.result);
