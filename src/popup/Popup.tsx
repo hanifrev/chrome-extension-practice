@@ -1,44 +1,28 @@
 import React, { useEffect, useState } from "react";
-import ReactDOM from "react-dom";
-import { Routes, Route } from "react-router-dom";
-import { BrowserRouter as Router } from "react-router-dom";
 import Login from "../components/Login";
-import ProtectedRoute from "../components/ProtectedRoute";
 import MainPage from "../components/MainPage";
-import browser from "webextension-polyfill";
-import Error from "../components/Error";
 
 const Popup = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
+
   useEffect(() => {
     chrome.runtime.sendMessage({ popupMounted: true });
+    console.log("----Popup rendered");
+
+    chrome.storage.local.get("isAuthenticated", (result) => {
+      setIsAuthenticated(result && result.isAuthenticated);
+      console.log("---AUTH TEST");
+    });
   }, []);
+
+  console.log(isAuthenticated);
 
   return (
     <>
-      {/* <MainPage /> */}
-      <Router>
-        <Routes>
-          <Route path="*" element={<Login />} />
-          <Route
-            path="/main"
-            element={
-              <ProtectedRoute>
-                <MainPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="/error" element={<Error />} />
-        </Routes>
-      </Router>
+      {isAuthenticated && isAuthenticated ? <MainPage /> : <Login onLogin={} />}
     </>
   );
 };
 
 export default Popup;
-
-// ReactDOM.render(
-//   <React.StrictMode>
-//     <Popup />
-//   </React.StrictMode>,
-//   document.getElementById("root")
-// );

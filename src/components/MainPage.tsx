@@ -18,6 +18,14 @@ const MainPage = () => {
     });
   };
 
+  const Logout = () => {
+    chrome.runtime.sendMessage({ action: "logout" }, (response) => {
+      if (response && response.result) {
+        console.log("----logout clicked");
+      }
+    });
+  };
+
   useEffect(() => {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs: any) => {
       const activeTab = tabs[0];
@@ -44,7 +52,7 @@ const MainPage = () => {
           amount={0}
           bgColor="bg-[#B5E4CA]"
         />
-        <div className="mx-auto py-6">
+        <div className="mx-auto py-">
           <button
             // type="submit"
             className={`text-neutral-50 text-[15px] font-bold leading-normal h-12 px-5 py-3 bg-blue-500 hover:bg-blue-400 rounded-xl w-[176px] ${
@@ -55,12 +63,20 @@ const MainPage = () => {
             Catch a Pokemons
           </button>
         </div>
-        <div className="mx-auto py-6">
+        <div className="mx-auto py-2">
           <button
             // type="submit"
             className="text-neutral-50 text-[15px] font-bold leading-normal h-12 px-5 py-3 bg-blue-500 hover:bg-blue-400 rounded-xl w-[186px]"
           >
             View my Pokemons
+          </button>
+        </div>
+        <div className="mx-auto py-2">
+          <button
+            onClick={Logout}
+            className="text-neutral-50 text-[15px] font-bold leading-normal h-12 px-5 py-3 bg-blue-500 hover:bg-blue-400 rounded-xl w-[186px]"
+          >
+            Logout
           </button>
         </div>
       </div>

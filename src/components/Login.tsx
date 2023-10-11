@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Cookies from "js-cookie";
 import PokemonLogo from "./Logo/PokemonLogo";
-import { useNavigate } from "react-router-dom";
 
 interface LoginPage {
   onLogin?: () => void;
@@ -18,26 +16,26 @@ const Login: React.FC<LoginPage> = ({ onLogin }) => {
     left: "50%",
     transform: "translate(-50%, -50%)",
   };
-  const navigate = useNavigate();
 
-  const handleLogin = (e: any) => {
-    localStorage.setItem("theUsername", username);
-    const theusername = localStorage.getItem("theUsername");
+  const handleLogin = () => {
+    chrome.runtime.sendMessage({ action: "login" }, (response) => {
+      if (response && response.result) {
+        console.log("----login clicked");
+      }
+    });
 
     chrome.storage.local.set({ username }, () => {
       console.log(`${username} is the username`);
     });
 
-    if (theusername) {
-      navigate("/main");
-    }
+    onLogin;
   };
 
   useEffect(() => {
     const myForm = document.querySelector("#myForm");
 
     if (myForm) {
-      console.log("Form element found:", myForm);
+      // console.log("Form element found:", myForm);
 
       myForm.addEventListener("submit", (event) => {
         event.preventDefault(); // Prevent the default form submission
@@ -50,9 +48,9 @@ const Login: React.FC<LoginPage> = ({ onLogin }) => {
         console.log("Form submitted. Username:", username);
         console.log("Password:", password);
 
-        chrome.runtime.sendMessage({ username, password }, (response) => {
-          console.log("Response from background script:", response.message);
-        });
+        // chrome.runtime.sendMessage({ username, password }, (response) => {
+        //   console.log("Response from background script:", response.message);
+        // });
       });
     } else {
       console.log("Form element not found.");
