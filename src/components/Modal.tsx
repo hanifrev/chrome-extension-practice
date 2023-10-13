@@ -75,7 +75,7 @@ const Modal = () => {
     console.log("---data set to cookie");
 
     // @ts-ignore
-    Cookies.set("pokemonArray", getCatchData);
+    Cookies.set("pokemonArray", JSON.stringify(getCatchData));
   }, [handleSave]);
 
   useEffect(() => {
