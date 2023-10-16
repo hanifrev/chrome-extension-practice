@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import PokemonLogo from "./Logo/PokemonLogo";
+import PokemonLogo from "../Logo/PokemonLogo";
 
 interface LoginPage {
   onLogin?: () => void;

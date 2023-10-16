@@ -70,3 +70,12 @@ Fetch from background script and send it to Modal, the pokeball still loaded on 
 #### 11 October 2023
 
 Found a solution how to show pokeball by clicking 'Catch a Pokemons' button inside menu / popup. I use this https://stackoverflow.com/a/69128710 as referance. On MainPage, i sendMessage to background script when the 'Catch a Pokemons' clicked, with action called 'perfomAction'. On background script, while listening to message 'perfomAction', i add chrome.tabs.query with action: "open_dialog_box" to communicate with content script. On content script, if content script received "open_dialog_box", it will set setShowThirdParty to true and pokeball shown.
+
+#### 12 October 2023
+
+Working on catched pokemon count and view saved pokemon, so i use redux-toolkit to manage the states, but at some point the redux wont work on popup components (MainPage, ViewPage) but it works well on the other components (non-popup), so to resolve that behaviour, i use the combination of redux toolkit, useEffect, and chrome API. So after pokemon catched, and if we input the nickname and click save button on modal, it will save the information (nickname, original name, and img url) to store via pokeCatchData slice. And then the pokeCatchData data will set to cookies. And on popup (MainPage and ViewPage files) i will get cookies by using chrome.tabs.query inside useEffect to get the active tab information and then i use chrome.cookies.get to get cookies value and then passed to useState then to UI. So basically is like that, it's working but i believe it still can to be improved.
+And i still wonder why the redux toolkit won't work on popup (MainPage and ViewPage files) i already wrap it on provider, i thinks it's the boilerplate problem, or not???, so later i will try to using the other boilerplate to see what happened.
+
+#### 13 October 2023
+
+Use chrome storage instead of chrome cookies. Make the the files/folder structure more cleaner. Clear all storage when logout from MainPage

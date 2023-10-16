@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Lottie from "lottie-react";
-import Loading from "../assets/Loading.json";
+import Loading from "../../assets/Loading.json";
 import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../store";
-import { pokeCatchData, pokeCount } from "../reducers/pokeSlice";
+import { AppDispatch, RootState } from "../../store";
+import { pokeCatchData, pokeCount } from "../../reducers/pokeSlice";
 
 const Modal = () => {
   const [fetched, setFetched] = useState(false);
@@ -71,7 +71,10 @@ const Modal = () => {
     saved && alert("saved");
   }
   useEffect(() => {
-    chrome.runtime.sendMessage({ type: "pokeData", dataPoke: getCatchData });
+    // chrome.runtime.sendMessage({ type: "pokeData", dataPoke: getCatchData });
+    chrome.storage.local.set({ theArray: getCatchData }, () => {
+      console.log("---STORAGE MODAL RUN");
+    });
     console.log("---data set to cookie");
 
     // @ts-ignore
@@ -79,52 +82,11 @@ const Modal = () => {
   }, [handleSave]);
 
   useEffect(() => {
-    chrome.runtime.sendMessage({ type: "updatePoke", countPoke: pokeSaved });
+    // chrome.runtime.sendMessage({ type: "updatePoke", countPoke: pokeSaved });
+    chrome.storage.local.set({ theArrayLength: pokeSaved });
     console.log("----updatepokeModal");
     Cookies.set("cookPoke", pokeSaved);
   }, [pokeSaved]);
-
-  // useEffect(() => {
-  //   // Load the existing data array from cookies, or initialize an empty array
-  //   chrome.tabs.query({ active: true, currentWindow: true }, (tabs: any) => {
-  //     if (tabs && tabs[0]) {
-  //       const tab = tabs[0];
-  //       const tabUrl = tab.url;
-
-  //       // Retrieve the existing data array from cookies
-  //       chrome.cookies.get({ url: tabUrl, name: "myDataArray" }, (cookie) => {
-  //         let dataArray = [];
-
-  //         if (cookie) {
-  //           dataArray = JSON.parse(cookie.value);
-  //         }
-
-  //         // Add the new data to the array
-  //         dataArray.push(dataToStore);
-
-  //         // Store the updated array back in a cookie
-  //         chrome.cookies.set(
-  //           {
-  //             url: tabUrl,
-  //             name: "myDataArray",
-  //             value: JSON.stringify(dataArray),
-  //             // expirationDate: Math.floor(Date.now() / 1000) + 3600, // Cookie expiration time (1 hour from now)
-  //           },
-  //           () => {
-  //             if (chrome.runtime.lastError) {
-  //               console.error(chrome.runtime.lastError);
-  //             } else {
-  //               console.log(
-  //                 "Data stored in the array in the cookie:",
-  //                 dataToStore
-  //               );
-  //             }
-  //           }
-  //         );
-  //       });
-  //     }
-  //   });
-  // }, [handleSave]);
 
   return (
     <div
@@ -147,7 +109,7 @@ const Modal = () => {
       <div style={{ fontSize: "32px", fontWeight: 800, color: "#000000" }}>
         Catch a pokemon
       </div>
-      <div>{pokeSaved}</div>
+      {/* <div>{pokeSaved}</div> */}
       <div
         style={{
           fontWeight: 600,

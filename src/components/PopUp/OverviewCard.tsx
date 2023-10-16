@@ -1,6 +1,6 @@
 import React from "react";
 import { Provider, useSelector } from "react-redux";
-import store, { RootState } from "../store";
+import store, { RootState } from "../../store";
 
 interface CardProps {
   img: string;

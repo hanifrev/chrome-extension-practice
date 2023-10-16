@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Provider, useSelector } from "react-redux";
-import store, { RootState } from "../store";
-import Pokeball from "./Logo/Pokeball";
+import store, { RootState } from "../../store";
+import Pokeball from "../Logo/Pokeball";
 import Modal from "./Modal";
 
 const ThirdParty = () => {
@@ -32,3 +32,8 @@ const ThirdParty = () => {
 };
 
 export default ThirdParty;
+
+//file structure
+//storage
+
+//diagram

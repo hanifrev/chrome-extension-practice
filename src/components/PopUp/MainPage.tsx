@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Provider, useSelector } from "react-redux";
-import store, { RootState } from "../store";
+import store, { RootState } from "../../store";
 import OverviewCard from "./OverviewCard";
-import ViewPage from "./ViewPage";
+import ViewPage from "./ViewPokemonPage";
 
 const MainPage = () => {
   const [isCatching, setIsCatching] = useState(false);
   const [testState, setTestState] = useState(false);
   const [viewPage, setViewPage] = useState(false);
-  const [count, setCount] = useState<any>();
+  const [count, setCount] = useState<any>(0);
 
   const fetchPokemon = () => {
     setIsCatching(true);
@@ -25,6 +25,13 @@ const MainPage = () => {
 
   const Logout = () => {
     chrome.runtime.sendMessage({ action: "logout" }, (response) => {
+      chrome.storage.local.clear(() => {
+        if (chrome.runtime.lastError) {
+          console.error(chrome.runtime.lastError);
+        } else {
+          console.log("Local storage has been cleared.");
+        }
+      });
       if (response && response.result) {
         console.log("----logout clicked");
       }
@@ -33,30 +40,64 @@ const MainPage = () => {
 
   const pokeSaved = useSelector((state: RootState) => state.data.pokeSaved);
 
-  useEffect(() => {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs: any) => {
-      const activeTab = tabs[0];
-      if (activeTab) {
-        chrome.tabs.sendMessage(activeTab.id, {
-          action: "executeFunction",
-        });
-      }
-    });
-    console.log(pokeSaved);
-  }, [fetchPokemon]);
+  // useEffect(() => {
+  //   chrome.tabs.query({ active: true, currentWindow: true }, (tabs: any) => {
+  //     const activeTab = tabs[0];
+  //     if (activeTab) {
+  //       chrome.tabs.sendMessage(activeTab.id, {
+  //         action: "executeFunction",
+  //       });
+  //     }
+  //   });
+  //   console.log(pokeSaved);
+  // }, [fetchPokemon]);
 
   useEffect(() => {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs: any) => {
-      if (tabs && tabs[0]) {
-        const tab = tabs[0];
-        chrome.cookies.get({ url: tab.url, name: "cookPoke" }, (cookie) => {
-          if (cookie) {
-            console.log("Cookie value: " + cookie.value);
-            setCount(cookie.value);
-          } else {
-            console.log("Cookie not found");
-          }
-        });
+    chrome.tabs.query({ active: true, currentWindow: true }),
+      (tabs: any) => {
+        if (tabs && tabs[0]) {
+          const tab = tabs[0];
+          chrome.runtime.onMessage.addListener(
+            (message, sender, sendResponse) => {
+              if (message.type === "pokeData") {
+                const data = message.dataPoke;
+                console.log("--pokeData", data);
+              }
+            }
+          );
+        }
+      };
+  }, []);
+
+  // useEffect(() => {
+  //   chrome.tabs.query({ active: true, currentWindow: true }, (tabs: any) => {
+  //     if (tabs && tabs[0]) {
+  //       const tab = tabs[0];
+  //       chrome.cookies.get({ url: tab.url, name: "cookPoke" }, (cookie) => {
+  //         if (cookie) {
+  //           console.log("Cookie value: " + cookie.value);
+  //           // setCount(cookie.value);
+  //         } else {
+  //           console.log("Cookie not found");
+  //         }
+  //       });
+  //     }
+  //   });
+  // });
+
+  // get pokemon count
+  useEffect(() => {
+    chrome.storage.local.get("theArrayLength", (result) => {
+      if (chrome.runtime.lastError) {
+        console.error(chrome.runtime.lastError);
+      } else {
+        const myData = result.theArrayLength;
+        if (myData) {
+          console.log("---LENGT RETRIEVED", myData);
+          setCount(myData);
+        } else {
+          console.log("---no length found");
+        }
       }
     });
   });

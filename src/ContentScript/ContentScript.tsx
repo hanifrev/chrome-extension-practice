@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ThirdParty from "../components/ThirdParty";
+import ThirdParty from "../components/ThirdPartyContentScript/ThirdParty";
 import Cookies from "js-cookie";
 import { Provider } from "react-redux";
 import store from "../store";
