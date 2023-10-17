@@ -1,11 +1,27 @@
 import React, { useEffect, useState } from "react";
 import Lottie from "lottie-react";
-import Loading from "../assets/Loading.json";
+import Loading from "../../assets/Loading.json";
 import Cookies from "js-cookie";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../store";
+import { pokeCatchData, pokeCount } from "../../reducers/pokeSlice";
 
 const Modal = () => {
   const [fetched, setFetched] = useState(false);
   const [data, setData] = useState<any>({});
+  const [imgUrl, setImgUrl] = useState("");
+  const [nickname, setNickname] = useState("");
+  const [saved, setSaved] = useState(false);
+
+  const pokeSaved: any = useSelector(
+    (state: RootState) => state.data.pokeSaved
+  );
+  const getCatchData = useSelector(
+    (state: RootState) => state.data.pokemonCatch
+  );
+  const dispatch = useDispatch<AppDispatch>();
+
+  console.log("--catched data", getCatchData);
 
   useEffect(() => {
     chrome.runtime.sendMessage({
@@ -34,6 +50,44 @@ const Modal = () => {
   console.log("DATA POKEMON:", data);
   //
 
+  const handleSave = (e: any) => {
+    e.preventDefault();
+    dispatch(pokeCount(pokeSaved + 1));
+
+    const dataToStore: any = {
+      nickname: nickname,
+      URL: data && data.sprites.front_default,
+      originName: data && data.species.name,
+    };
+
+    dispatch(pokeCatchData(dataToStore));
+
+    setTimeout(() => {
+      setSaved(true);
+    }, 1000);
+  };
+
+  {
+    saved && alert("saved");
+  }
+  useEffect(() => {
+    // chrome.runtime.sendMessage({ type: "pokeData", dataPoke: getCatchData });
+    chrome.storage.local.set({ theArray: getCatchData }, () => {
+      console.log("---STORAGE MODAL RUN");
+    });
+    console.log("---data set to cookie");
+
+    // @ts-ignore
+    Cookies.set("pokemonArray", JSON.stringify(getCatchData));
+  }, [handleSave]);
+
+  useEffect(() => {
+    // chrome.runtime.sendMessage({ type: "updatePoke", countPoke: pokeSaved });
+    chrome.storage.local.set({ theArrayLength: pokeSaved });
+    console.log("----updatepokeModal");
+    Cookies.set("cookPoke", pokeSaved);
+  }, [pokeSaved]);
+
   return (
     <div
       className="fixed flex flex-col w-[900px] bg-white"
@@ -55,6 +109,7 @@ const Modal = () => {
       <div style={{ fontSize: "32px", fontWeight: 800, color: "#000000" }}>
         Catch a pokemon
       </div>
+      {/* <div>{pokeSaved}</div> */}
       <div
         style={{
           fontWeight: 600,
@@ -96,7 +151,6 @@ const Modal = () => {
               You've found a <b>{data && data.species.name}</b>
             </div>
             <form
-              action="submit"
               style={{
                 paddingTop: 16,
                 display: "flex",
@@ -105,7 +159,7 @@ const Modal = () => {
                 width: 360,
                 maxWidth: 360,
               }}
-              // onSubmit={submitHandler}
+              onSubmit={handleSave}
             >
               <label
                 htmlFor="nickname"
@@ -114,6 +168,7 @@ const Modal = () => {
                 Nickname
               </label>
               <input
+                onChange={(e) => setNickname(e.target.value)}
                 type="text"
                 id="nickname"
                 style={{
@@ -134,6 +189,7 @@ const Modal = () => {
                   borderRadius: 12,
                   color: "white",
                 }}
+                // onClick={handleSave}
               >
                 Save
               </button>
