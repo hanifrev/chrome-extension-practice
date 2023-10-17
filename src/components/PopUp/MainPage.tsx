@@ -107,10 +107,13 @@ const MainPage = () => {
       <div className="w-[400px] p-6">
         {viewPage ? (
           <div>
-            <div className="cursor-pointer" onClick={() => setViewPage(false)}>
+            <div
+              className="cursor-pointer text-[20px] font-semibold"
+              onClick={() => setViewPage(false)}
+            >
               BACK
             </div>
-            <div className="font-bold text-xl pb-2">View Pokemon</div>
+            <div className="font-bold text-[32px] pb-2">My Pokemons</div>
             <ViewPage />
           </div>
         ) : (
