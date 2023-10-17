@@ -6,7 +6,6 @@ import store from "../store";
 
 const ContentScript = () => {
   const [showThirdParty, setShowThirdParty] = useState(false);
-  const [isCatching, setIsCatching] = useState<boolean>(false);
 
   useEffect(() => {
     const container = document.createElement("div");
@@ -50,13 +49,6 @@ const ContentScript = () => {
 
   console.log(showThirdParty);
 
-  // to change the state for show / unshown the pokeball (still not working yet)
-  // useEffect(() => {
-  //   chrome.storage.local.get().then((res) => {
-  //     setIsCatching(res.isCatching);
-  //   });
-  // }, []);
-
   return (
     <div>
       {showThirdParty && (
@@ -64,7 +56,6 @@ const ContentScript = () => {
           <ThirdParty />
         </Provider>
       )}
-      {/* {!isCatching && <ThirdParty />} */}
     </div>
   );
 };

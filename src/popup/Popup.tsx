@@ -6,7 +6,6 @@ import store from "../store";
 
 const Popup = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isLogin, setIsLogin] = useState(false);
 
   useEffect(() => {
     chrome.runtime.sendMessage({ popupMounted: true });

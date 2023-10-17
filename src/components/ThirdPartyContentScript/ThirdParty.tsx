@@ -6,14 +6,12 @@ import Modal from "./Modal";
 
 const ThirdParty = () => {
   const [modal, setModal] = useState(false);
-  const [thirdParty, setThirdParty] = useState(false);
 
   const handleClick = () => {
     console.log("click ball");
     setModal(!modal);
   };
 
-  const fetchPokemon = () => {};
   const pokeSaved = useSelector((state: RootState) => state.data.pokeSaved);
 
   return (
@@ -32,8 +30,3 @@ const ThirdParty = () => {
 };
 
 export default ThirdParty;
-
-//file structure
-//storage
-
-//diagram

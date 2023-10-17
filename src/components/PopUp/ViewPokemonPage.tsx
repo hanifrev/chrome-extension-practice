@@ -1,24 +1,10 @@
 import React, { useEffect, useState } from "react";
 
 const ViewPage = () => {
-  const [state, setState] = useState<any>();
   const [pokeArray, setPokeArray] = useState();
 
   useEffect(() => {
-    // chrome.tabs.query({ active: true, currentWindow: true }, (tabs: any) => {
-    //   if (tabs && tabs[0]) {
-    //     const tab = tabs[0];
-    //     chrome.cookies.get({ url: tab.url, name: "pokemonArray" }, (cookie) => {
-    //       if (cookie) {
-    //         console.log(cookie.value);
-    //         setState(cookie.value);
-    //       } else {
-    //         console.log("Cookie not found");
-    //       }
-    //     });
-    //   }
-    // });
-
+    // To get list of saved pokemon
     chrome.storage.local.get("theArray", (result) => {
       if (chrome.runtime.lastError) {
         console.error(chrome.runtime.lastError);

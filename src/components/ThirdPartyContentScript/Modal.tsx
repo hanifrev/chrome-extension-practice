@@ -9,7 +9,6 @@ import { pokeCatchData, pokeCount } from "../../reducers/pokeSlice";
 const Modal = () => {
   const [fetched, setFetched] = useState(false);
   const [data, setData] = useState<any>({});
-  const [imgUrl, setImgUrl] = useState("");
   const [nickname, setNickname] = useState("");
   const [saved, setSaved] = useState(false);
 
@@ -70,6 +69,8 @@ const Modal = () => {
   {
     saved && alert("saved");
   }
+
+  // To set catched pokemon to storage
   useEffect(() => {
     // chrome.runtime.sendMessage({ type: "pokeData", dataPoke: getCatchData });
     chrome.storage.local.set({ theArray: getCatchData }, () => {
@@ -81,6 +82,7 @@ const Modal = () => {
     Cookies.set("pokemonArray", JSON.stringify(getCatchData));
   }, [handleSave]);
 
+  // To set count of how many pokemon catched
   useEffect(() => {
     // chrome.runtime.sendMessage({ type: "updatePoke", countPoke: pokeSaved });
     chrome.storage.local.set({ theArrayLength: pokeSaved });

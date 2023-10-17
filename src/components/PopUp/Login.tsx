@@ -35,10 +35,8 @@ const Login: React.FC<LoginPage> = ({ onLogin }) => {
     const myForm = document.querySelector("#myForm");
 
     if (myForm) {
-      // console.log("Form element found:", myForm);
-
       myForm.addEventListener("submit", (event) => {
-        event.preventDefault(); // Prevent the default form submission
+        event.preventDefault();
 
         // @ts-ignore
         const username = document.getElementById("username").value;

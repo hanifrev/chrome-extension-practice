@@ -1,6 +1,4 @@
 import React from "react";
-import { Provider, useSelector } from "react-redux";
-import store, { RootState } from "../../store";
 
 interface CardProps {
   img: string;
@@ -10,7 +8,6 @@ interface CardProps {
 }
 
 const OverviewCard: React.FC<CardProps> = ({ img, title, amount, bgColor }) => {
-  const pokeSaved = useSelector((state: RootState) => state.data.pokeSaved);
   return (
     <div
       className={`w-[352px] h-[132px] p-4  bg-opacity-25 rounded-xl justify-start items-start flex  ${bgColor}`}
