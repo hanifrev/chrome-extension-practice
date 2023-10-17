@@ -79,3 +79,7 @@ And i still wonder why the redux toolkit won't work on popup (MainPage and ViewP
 #### 13 October 2023
 
 Use chrome storage instead of chrome cookies. Make the the files/folder structure more cleaner. Clear all storage when logout from MainPage
+
+### FLOW
+
+![flow](https://i.imgur.com/BHli3YM.png)
