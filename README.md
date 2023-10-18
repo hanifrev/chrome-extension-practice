@@ -80,6 +80,14 @@ And i still wonder why the redux toolkit won't work on popup (MainPage and ViewP
 
 Use chrome storage instead of chrome cookies. Make the the files/folder structure more cleaner. Clear all storage when logout from MainPage
 
+#### 17 October 2023
+
+Updating the UI and add release pokemon on view my pokemon page.
+
+#### 18 October 2023
+
+Fix Login flow, previously not work really well. Create flowchart on FigJam
+
 ### FLOW
 
 ![flow](https://i.imgur.com/BHli3YM.png)
