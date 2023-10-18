@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 const ViewPage = () => {
-  const [pokeArray, setPokeArray] = useState();
+  const [pokeArray, setPokeArray] = useState<any>();
 
   useEffect(() => {
     // To get list of saved pokemon
@@ -15,15 +15,28 @@ const ViewPage = () => {
           setPokeArray(myData);
           const length = myData.length;
           console.log(myData.length);
-          // chrome.storage.local.set({ theArrayLength: length });
+          chrome.storage.local.set({ theArrayLength: length });
         } else {
           console.log("---no array found");
         }
       }
     });
-  }, []);
+  }, [pokeArray]);
 
   console.log("--ARRAY", pokeArray);
+
+  const handleDelete = (index: any) => {
+    const updatedArray = [...pokeArray];
+    updatedArray.splice(index, 1);
+
+    chrome.storage.local.set({ theArray: updatedArray }, () => {
+      if (chrome.runtime.lastError) {
+        console.error(chrome.runtime.lastError);
+      } else {
+        setPokeArray(updatedArray);
+      }
+    });
+  };
 
   return (
     <div className="flex flex-col gap-3">
@@ -31,7 +44,7 @@ const ViewPage = () => {
         // @ts-ignore
         pokeArray.map((item: any, index) => {
           return (
-            <div className="pb-3">
+            <div className="pb-3" key={index}>
               <div className="bg-[#EFEFEF]">
                 <img
                   src={item.URL}
@@ -48,7 +61,10 @@ const ViewPage = () => {
                     <b>{item.originName}</b>
                   </li>
                 </ul>
-                <div className="bg-red-500 text-white px-[20px] py-3 font-bold h-12 flex items-center rounded-xl">
+                <div
+                  onClick={() => handleDelete(index)}
+                  className="bg-red-500 text-white px-[20px] py-3 font-bold h-12 flex items-center rounded-xl cursor-pointer hover:bg-red-300"
+                >
                   Release
                 </div>
               </div>

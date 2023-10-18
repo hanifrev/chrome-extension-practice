@@ -52,6 +52,7 @@ const MainPage = () => {
           setCount(myData);
         } else {
           console.log("---no length found");
+          setCount(myData);
         }
       }
     });

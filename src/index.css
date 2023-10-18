@@ -5,3 +5,10 @@
 .modal-title {
   @apply font-bold text-3xl;
 }
+
+.btn-catch {
+  background: red;
+}
+.btn-catch:hover {
+  background: yellow;
+}

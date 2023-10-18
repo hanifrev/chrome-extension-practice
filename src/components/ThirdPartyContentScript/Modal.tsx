@@ -6,7 +6,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
 import { pokeCatchData, pokeCount } from "../../reducers/pokeSlice";
 
-const Modal = () => {
+interface ModalProps {
+  closeModal: () => void;
+}
+
+const Modal: React.FC<ModalProps> = ({ closeModal }) => {
   const [fetched, setFetched] = useState(false);
   const [data, setData] = useState<any>({});
   const [nickname, setNickname] = useState("");
@@ -63,6 +67,7 @@ const Modal = () => {
 
     setTimeout(() => {
       setSaved(true);
+      closeModal();
     }, 1000);
   };
 
@@ -89,6 +94,8 @@ const Modal = () => {
     console.log("----updatepokeModal");
     Cookies.set("cookPoke", pokeSaved);
   }, [pokeSaved]);
+
+  console.log(pokeSaved);
 
   return (
     <div
@@ -191,6 +198,7 @@ const Modal = () => {
                   borderRadius: 12,
                   color: "white",
                 }}
+                className="cursor-pointer"
                 // onClick={handleSave}
               >
                 Save

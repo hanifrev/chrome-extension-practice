@@ -12,6 +12,10 @@ const ThirdParty = () => {
     setModal(!modal);
   };
 
+  const closeModal = () => {
+    setModal(false);
+  };
+
   const pokeSaved = useSelector((state: RootState) => state.data.pokeSaved);
 
   return (
@@ -19,12 +23,12 @@ const ThirdParty = () => {
       <div
         onClick={handleClick}
         style={{ bottom: 0, position: "absolute" }}
-        className="w-[300px] h-[300px] z-[99999] mx-auto left-[50%] top-[50%] transform translate-x-[-50%] translate-y-[-50%] "
+        className="w-[300px] h-[300px] z-[99999] mx-auto left-[50%] top-[50%] transform translate-x-[-50%] translate-y-[-50%] cursor-pointer"
       >
         {<Pokeball />}
         {pokeSaved}
       </div>
-      {modal && <Modal />}
+      {modal && <Modal closeModal={closeModal} />}
     </Provider>
   );
 };

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import PokemonLogo from "../Logo/PokemonLogo";
 
 interface LoginPage {
-  onLogin?: () => void;
+  onLogin?: any;
 }
 
 const Login: React.FC<LoginPage> = ({ onLogin }) => {
@@ -28,7 +28,9 @@ const Login: React.FC<LoginPage> = ({ onLogin }) => {
       console.log(`${username} is the username`);
     });
 
-    onLogin;
+    setTimeout(() => {
+      onLogin();
+    }, 500);
   };
 
   useEffect(() => {
